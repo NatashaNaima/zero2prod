@@ -1,19 +1,17 @@
-use actix_web::{get, web, App, HttpServer, Responder};
+use actix_web::{get, post, web, App, HttpRequest, HttpResponse, HttpServer, Responder};
 
-#[get("/")]
-async fn index() -> impl Responder {
-    "Hello, World!"
-}
-
-#[get("/{name}")]
-async fn hello(name: web::Path<String>) -> impl Responder {
-    format!("Hello {}!", &name)
+#[get("/health_check")]
+async fn health_check() -> impl Responder {
+    HttpResponse::Ok()
 }
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
-     HttpServer::new(|| App::new().service(index).service(hello))
-        .bind(("127.0.0.1", 8080))?
-        .run()
-        .await
+    HttpServer::new(|| { 
+        App::new()
+            .service(health_check)
+    })
+    .bind(("127.0.0.1", 8080))?
+    .run()
+    .await
 }
