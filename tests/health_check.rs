@@ -60,7 +60,7 @@ async fn subscribe_returns_400_when_data_is_missing() {
         // act
         let response = client
         .post(&format!("{}/subscriptions", &app_address))
-        .header("Content-Type", "application/x-www-form-urlendcoded")
+        .header("Content-Type", "application/x-www-form-urlencoded")
         .body(invalid_body)
         .send()
         .await
